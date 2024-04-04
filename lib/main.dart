@@ -1,3 +1,4 @@
+import 'package:flame/extensions.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:plane_war_game/game/plane_war_game.dart';
@@ -21,20 +22,40 @@ Future<void> main() async {
   await Flame.device.fullScreen();
   
   // 创建Flappy Bird 游戏的实例 
-  final game = PlaneWarGame();
   print('game start');
   // 启动app
   runApp(
-    // 游戏组件
-    GameWidget(
-      game: game
-      // 指定了游戏启动时要显示的初始叠加层，这里指定为主菜单屏幕。
-      // initialActiveOverlays: const [MainMenuScreen.id],
-      // 指定了不同叠加层的构建器，用于根据需要构建不同的叠加层。在这里，指定了 mainMenu 和 gameOver 两个叠加层的构建器。
-      // overlayBuilderMap: {
-        // 'mainMenu': (context, _) => MainMenuScreen(game: game),
-        // 'gameOver': (context, _) => GameOverScreen(game: game),
-      // },
-    ),
+    MyGame()
   );
+}
+
+class MyGame extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    final game = PlaneWarGame();
+
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onPanUpdate: (details) {
+        var pointerPosition = details.localPosition;
+        // 将指针位置传递给游戏组件
+        print('pointerPosition in MyGame');
+        game.updatePointerPosition(pointerPosition.toVector2());
+      },
+      child:
+        // 游戏组件
+        GameWidget(
+          game: game
+          // 指定了游戏启动时要显示的初始叠加层，这里指定为主菜单屏幕。
+          // initialActiveOverlays: const [MainMenuScreen.id],
+          // 指定了不同叠加层的构建器，用于根据需要构建不同的叠加层。在这里，指定了 mainMenu 和 gameOver 两个叠加层的构建器。
+          // overlayBuilderMap: {
+            // 'mainMenu': (context, _) => MainMenuScreen(game: game),
+            // 'gameOver': (context, _) => GameOverScreen(game: game),
+          // },
+        ),
+    );
+  }
 }
