@@ -35,13 +35,14 @@ class MyGame extends StatelessWidget {
 
     final game = PlaneWarGame();
 
-
+    // 使用flutter中的GestureDetector控件来进行手势识别
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onPanUpdate: (details) {
+      behavior: HitTestBehavior.opaque, // 在其区域内截断触摸事件，而不会将它们传递给子组件。
+      onPanUpdate: (details) { // 监听指针移动
         var pointerPosition = details.localPosition;
         // 将指针位置传递给游戏组件
         print('pointerPosition in MyGame');
+        // 触发updatePointerPosition方法
         game.updatePointerPosition(pointerPosition.toVector2());
       },
       child:
