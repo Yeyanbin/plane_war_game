@@ -1,3 +1,6 @@
+import 'package:flame/game.dart';
+import 'package:plane_war_game/game/assets.dart';
+
 class Config {
   static const groundHeight = 110.0;
   static const gameSpeed = 200.0;
@@ -5,4 +8,18 @@ class Config {
   static const birdVelocity = 210;
   static const gravity = -100.0;
   static const cloudsHeight = 70.0;
+  static const enemy1Imgs = [
+    Assets.enemy1_fly1
+  ];
+  static const enemy2Imgs = [
+    Assets.enemy2_fly1
+  ];
+  static const enemy3Imgs = [
+    Assets.enemy3_fly1,
+    Assets.enemy3_fly2
+  ];
+  static final enemy1Size = Vector2(50, 50);
+  static final enemy2Size = Vector2(100, 100);
+  static final enemy3Size = Vector2(200, 150);
+  static const enemySpeed = 100.0;
 }

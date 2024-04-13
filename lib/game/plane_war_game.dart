@@ -5,15 +5,20 @@
 
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:plane_war_game/components/background.dart';
+import 'package:plane_war_game/components/enemy.dart';
 import 'package:plane_war_game/components/plane_hero.dart';
+import 'package:plane_war_game/game/assets.dart';
 import 'package:plane_war_game/game/configuration.dart';
 
 class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
   PlaneWarGame();
 
   late PlaneHero planeHero;
+  Timer interval = Timer(Config.pipeInterval, repeat: true);
+
 
       // Timer attackInterval = Timer(Config.pipeInterval, repeat: true);
   Future<void> onLoad() async {
@@ -32,7 +37,7 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
     // add(Background());
 
     // interval计时器每次触发时都xx会添加一个新的 PipeGroup 到游戏中。
-    // interval.onTick = () => add(PipeGroup());
+    interval.onTick = () => add(Enemy(50.2, size, Config.enemy1Imgs));
   }
   
 
