@@ -7,6 +7,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:plane_war_game/components/background.dart';
+import 'package:plane_war_game/components/bullet.dart';
 import 'package:plane_war_game/components/plane_hero.dart';
 import 'package:plane_war_game/game/configuration.dart';
 
@@ -14,8 +15,12 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
   PlaneWarGame();
 
   late PlaneHero planeHero;
+  int bulletCount = 0;
+  double lastBulletTime = 0.0;
+  double bulletInterval = 0.2333; // 子弹发射间隔（秒）
 
       // Timer attackInterval = Timer(Config.pipeInterval, repeat: true);
+  @override
   Future<void> onLoad() async {
 
     /*
@@ -40,9 +45,17 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
   void update(double dt) {
     super.update(dt);
     // Update ball position to follow the pointer
-    // if (pointer != null) {
-    //   planeHero.position = pointer!.position;
-    // }
+    lastBulletTime += dt;
+    if (lastBulletTime >= bulletInterval) {
+      spawnBullet();
+      lastBulletTime -= bulletInterval; // 减去发射的间隔时间，尽量减少误差
+      bulletCount++;
+    }
+  }
+
+  void spawnBullet() {
+    final bullet = Bullet(x: planeHero.position.x + 45/2, y: planeHero.position.y );
+    add(bullet);
   }
 
   void updatePointerPosition(Vector2 pointerPosition) {

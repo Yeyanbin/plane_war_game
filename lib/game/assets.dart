@@ -3,7 +3,7 @@ class Assets {
   // 
   static const hero_fly1 = 'hero_fly1.png';
   static const hero_fly2 = 'hero_fly2.png';
-  // static const ground = 'ground.png';
+  static const bullet = 'bullet.png';
   // static const clouds = 'clouds.png';
   // static const pipe = 'pipe.png';
   // static const pipeRotated = 'pipe_rotated.png';
