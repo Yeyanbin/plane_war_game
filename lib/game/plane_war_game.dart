@@ -13,12 +13,15 @@ import 'package:plane_war_game/components/bullet.dart';
 import 'package:plane_war_game/components/plane_hero.dart';
 import 'package:plane_war_game/game/assets.dart';
 import 'package:plane_war_game/game/configuration.dart';
+import 'package:plane_war_game/util/math.dart';
+import 'package:plane_war_game/util/enemy_type_helper.dart';
+
 
 class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
   PlaneWarGame();
 
   late PlaneHero planeHero;
-  Timer interval = Timer(Config.pipeInterval, repeat: true);
+  Timer enemyInterval = Timer(Config.pipeInterval, repeat: true);
 
   int bulletCount = 0;
   double lastBulletTime = 0.0;
@@ -42,13 +45,24 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
     // add(Background());
 
     // interval计时器每次触发时都xx会添加一个新的 PipeGroup 到游戏中。
-    interval.onTick = () => add(Enemy(50.2, size, Config.enemy1Imgs));
+    enemyInterval.onTick = addEnemy;
   }
   
+  void addEnemy() {
+    final enemyRandomNumber = getRandomNumber();
+
+    final enemySize = enemyRandomNumber.toRandomEnemySize;
+
+    var x = getRandomNumber(min: enemySize.x, max: size.x - enemySize.x);
+    print('add Enemy ${size.y} x: ${x}');
+    add(Enemy(x, enemySize, enemyRandomNumber.toRandomEnemyImgs));
+  }
 
 
   void update(double dt) {
     super.update(dt);
+    enemyInterval.update(dt);
+
     // Update ball position to follow the pointer
     lastBulletTime += dt;
     if (lastBulletTime >= bulletInterval) {

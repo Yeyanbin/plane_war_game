@@ -13,13 +13,14 @@ class Enemy extends SpriteAnimationComponent
 
   // late final SpriteAnimation animation;
   late final List<String> enemyImgs;
+  late final double x;
 
-  Enemy(double x, Vector2 size, this.enemyImgs) 
+  Enemy(this.x, Vector2 size, this.enemyImgs) 
   : super(size: size);
 
   @override
   Future<void> onLoad() async {
-
+    print('bullet loading ${x}');
     position.x = x;
     position.y = 0;
 
@@ -29,6 +30,7 @@ class Enemy extends SpriteAnimationComponent
     // 创建 SpriteAnimation 对象
     animation = SpriteAnimation.spriteList(images, stepTime: 0.1);
     print(animation);
+    add(RectangleHitbox());
   }
 
   @override
@@ -36,6 +38,6 @@ class Enemy extends SpriteAnimationComponent
     // 更新动画帧
     super.update(dt);
 
-    position.y -= Config.enemySpeed * dt;
+    position.y += Config.enemySpeed * dt;
   }
 }

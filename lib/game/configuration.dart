@@ -18,8 +18,8 @@ class Config {
     Assets.enemy3_fly1,
     Assets.enemy3_fly2
   ];
-  static final enemy1Size = Vector2(50, 50);
-  static final enemy2Size = Vector2(100, 100);
-  static final enemy3Size = Vector2(200, 150);
+  static final enemy1Size = Vector2(40, 40);
+  static final enemy2Size = Vector2(80, 90);
+  static final enemy3Size = Vector2(120, 150);
   static const enemySpeed = 100.0;
 }
