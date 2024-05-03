@@ -3,6 +3,7 @@
 // class FlappyBirdGame extends FlameGame with TapDetector, HasCollisionDetection {
 
 
+import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/timer.dart';
@@ -25,9 +26,10 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
 
   int bulletCount = 0;
   double lastBulletTime = 0.0;
-  double bulletInterval = 0.2333; // 子弹发射间隔（秒）
+  double bulletInterval = 0.3; // 子弹发射间隔（秒）
+  late TextComponent scoreText; // 分数
+  double score = 0;
 
-      // Timer attackInterval = Timer(Config.pipeInterval, repeat: true);
   @override
   Future<void> onLoad() async {
 
@@ -38,11 +40,9 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
     print('add back');
     addAll([
       Background(),
-      // Ground(),
       planeHero = PlaneHero(),
-      // score = buildScore(),
+      scoreText = buildScore(),
     ]);
-    // add(Background());
 
     // interval计时器每次触发时都xx会添加一个新的 PipeGroup 到游戏中。
     enemyInterval.onTick = addEnemy;
@@ -50,26 +50,26 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
   
   void addEnemy() {
     final enemyRandomNumber = getRandomNumber();
+    final enemyData = enemyRandomNumber.toRandomEnemyProp;
 
-    final enemySize = enemyRandomNumber.toRandomEnemySize;
-
-    var x = getRandomNumber(min: enemySize.x, max: size.x - enemySize.x);
-    print('add Enemy ${size.y} x: ${x}');
-    add(Enemy(x, enemySize, enemyRandomNumber.toRandomEnemyImgs));
+    var x = getRandomNumber(min: enemyData.size.x, max: size.x - enemyData.size.x);
+    // print('add Enemy ${size.y} x: ${x}');
+    add(Enemy(enemyData: enemyData, x: x));
   }
 
 
+  @override
   void update(double dt) {
     super.update(dt);
     enemyInterval.update(dt);
 
-    // Update ball position to follow the pointer
     lastBulletTime += dt;
     if (lastBulletTime >= bulletInterval) {
       spawnBullet();
       lastBulletTime -= bulletInterval; // 减去发射的间隔时间，尽量减少误差
       bulletCount++;
     }
+    scoreText.text = 'Score: ${score.toString()}';
   }
 
   void spawnBullet() {
@@ -80,8 +80,23 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
   void updatePointerPosition(Vector2 pointerPosition) {
     planeHero.position.x = pointerPosition.x - 45/2;
     planeHero.position.y = pointerPosition.y - 50/2;
-    print('pointerPosition');
+  }
+  
+  TextComponent buildScore() {
+    // 返回一个文本组件
+    return TextComponent(
+        position: Vector2(size.x / 2, size.y / 2 * 0.2), // Vector2 对象用于描述方向向量
+        anchor: Anchor.center,
+        textRenderer: TextPaint( // 绘制文本
+          style: const TextStyle(
+              fontSize: 40, fontFamily: 'Game', fontWeight: FontWeight.bold),
+        ));
+  }
+
+  void addScore(double score) {
+    print('add score ${score}');
+    this.score += score;
   }
 }
 
-// enum PlaneMovement { }
+

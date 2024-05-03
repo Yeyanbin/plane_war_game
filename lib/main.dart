@@ -41,7 +41,7 @@ class MyGame extends StatelessWidget {
       onPanUpdate: (details) { // 监听指针移动
         var pointerPosition = details.localPosition;
         // 将指针位置传递给游戏组件
-        print('pointerPosition in MyGame');
+        // print('pointerPosition in MyGame');
         // 触发updatePointerPosition方法
         game.updatePointerPosition(pointerPosition.toVector2());
       },

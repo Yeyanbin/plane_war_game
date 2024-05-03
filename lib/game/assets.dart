@@ -1,4 +1,5 @@
 class Assets {
+  static const gameOver = 'gameover.png';
   static const background = 'background.png';
   // 
   static const hero_fly1 = 'hero_fly1.png';

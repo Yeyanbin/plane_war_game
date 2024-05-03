@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:plane_war_game/components/has_damage.dart';
 import 'package:plane_war_game/game/assets.dart';
 import 'package:plane_war_game/game/plane_war_game.dart';
 
@@ -7,8 +8,12 @@ import 'package:plane_war_game/game/plane_war_game.dart';
  * 子弹组件，有基本的属性，位置速度伤害
  */
 
-class Bullet extends SpriteComponent with HasGameRef<PlaneWarGame> {
+class Bullet extends SpriteComponent with HasGameRef<PlaneWarGame>, CollisionCallbacks implements HasDamage {
+  @override
+  double damage;
+
   Bullet({
+    this.damage = 10,
     required this.x,
     required this.y,
   });
@@ -41,4 +46,11 @@ class Bullet extends SpriteComponent with HasGameRef<PlaneWarGame> {
 
   }
 
+  @override
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
+    print('onCollisionStart 子弹');
+
+    removeFromParent();
+  }
 }

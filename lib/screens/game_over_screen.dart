@@ -1,9 +1,9 @@
-import 'package:flappy_bird_game/game/assets.dart';
-import 'package:flappy_bird_game/game/flappy_bird_game.dart';
+import 'package:plane_war_game/game/assets.dart';
 import 'package:flutter/material.dart';
+import 'package:plane_war_game/game/plane_war_game.dart';
 
 class GameOverScreen extends StatelessWidget {
-  final FlappyBirdGame game;
+  final PlaneWarGame game;
 
   const GameOverScreen({Key? key, required this.game}) : super(key: key);
 
@@ -15,7 +15,7 @@ class GameOverScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min, // MainAxisSize.min 表示主轴方向上的尺寸尽可能小。
         children: [
           Text(
-            'Score: ${game.bird.score}',
+            'Score: ${game.score}',
             style: const TextStyle(
               fontSize: 60,
               color: Colors.white,
@@ -43,7 +43,7 @@ class GameOverScreen extends StatelessWidget {
 
   void onRestart() {
     // 当重新开始按钮被点击时触发。
-    game.bird.reset();
+    game.planeHero.reset();
     game.overlays.remove('gameOver'); // 移除叠加层
     game.resumeEngine(); // 恢复游戏引擎的运行。
     // 它会启动游戏引擎的主循环（game loop），使得游戏可以继续更新、渲染和响应事件。
