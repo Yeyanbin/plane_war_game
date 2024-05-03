@@ -1,20 +1,23 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:plane_war_game/components/enemy_prop.dart';
-import 'package:plane_war_game/components/has_damage.dart';
+import 'package:plane_war_game/util/abstract_util.dart';
 import 'package:plane_war_game/game/plane_war_game.dart';
 
 class Enemy extends SpriteAnimationComponent
-    with HasGameRef<PlaneWarGame>, CollisionCallbacks{
+    with HasGameRef<PlaneWarGame>, CollisionCallbacks
+    implements IsEnemy {
 
   @override
+  late String id;
   late final double x;
   late double hp; // 血量属性
   late final EnemyProp enemyData;
 
   Enemy({
     required this.enemyData,
-    required this.x
+    required this.x,
+    required this.id
   }) 
   : super(size: enemyData.size);
 
@@ -57,8 +60,12 @@ class Enemy extends SpriteAnimationComponent
     // print('die');
     // 记分和销毁
     gameRef.addScore(enemyData.score);
+    gameRef.removeEnemy(id);
     removeFromParent();
+  }
 
+  void clear() {
+    removeFromParent();
   }
 
   void takeDamage() {

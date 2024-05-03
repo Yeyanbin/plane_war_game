@@ -25,7 +25,7 @@ class GameOverScreen extends StatelessWidget {
           // 创建一个高度为 20 像素的空白区域
           const SizedBox(height: 20),
           // 插入图片
-          Image.asset(Assets.gameOver),
+          // Image.asset(Assets.gameOver),
           const SizedBox(height: 20),
           // 按钮
           ElevatedButton(
@@ -43,7 +43,7 @@ class GameOverScreen extends StatelessWidget {
 
   void onRestart() {
     // 当重新开始按钮被点击时触发。
-    game.planeHero.reset();
+    game.reset();
     game.overlays.remove('gameOver'); // 移除叠加层
     game.resumeEngine(); // 恢复游戏引擎的运行。
     // 它会启动游戏引擎的主循环（game loop），使得游戏可以继续更新、渲染和响应事件。

@@ -29,6 +29,8 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
   double bulletInterval = 0.3; // 子弹发射间隔（秒）
   late TextComponent scoreText; // 分数
   double score = 0;
+  int enemyCount = 0;
+  Map<String, Enemy> enemyMap = {};
 
   @override
   Future<void> onLoad() async {
@@ -54,7 +56,20 @@ class PlaneWarGame extends FlameGame with TapDetector, HasCollisionDetection {
 
     var x = getRandomNumber(min: enemyData.size.x, max: size.x - enemyData.size.x);
     // print('add Enemy ${size.y} x: ${x}');
-    add(Enemy(enemyData: enemyData, x: x));
+    enemyCount += 1;
+    final enemyNewId = 'Enemy-${enemyCount.toString()}';
+    add(enemyMap[enemyNewId] = Enemy(enemyData: enemyData, x: x, id: enemyNewId ));
+  }
+
+  void removeEnemy(String id) {
+    // print('Enemy删除 ${id}');
+    enemyMap.remove(id);
+  }
+
+  void reset() {
+    planeHero.reset();
+    print('reset! ${enemyMap}');
+    enemyMap.forEach((key, value) => value.clear());
   }
 
 

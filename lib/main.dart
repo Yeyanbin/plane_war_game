@@ -5,6 +5,7 @@ import 'package:plane_war_game/game/plane_war_game.dart';
 // import 'package:flappy_bird_game/screens/main_menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:plane_war_game/screens/game_over_screen.dart';
 // import 'screens/game_over_screen.dart';
 
 Future<void> main() async {
@@ -48,14 +49,14 @@ class MyGame extends StatelessWidget {
       child:
         // 游戏组件
         GameWidget(
-          game: game
+          game: game,
           // 指定了游戏启动时要显示的初始叠加层，这里指定为主菜单屏幕。
           // initialActiveOverlays: const [MainMenuScreen.id],
           // 指定了不同叠加层的构建器，用于根据需要构建不同的叠加层。在这里，指定了 mainMenu 和 gameOver 两个叠加层的构建器。
-          // overlayBuilderMap: {
+          overlayBuilderMap: {
             // 'mainMenu': (context, _) => MainMenuScreen(game: game),
-            // 'gameOver': (context, _) => GameOverScreen(game: game),
-          // },
+            'gameOver': (context, _) => GameOverScreen(game: game),
+          },
         ),
     );
   }

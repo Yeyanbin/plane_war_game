@@ -1,6 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:plane_war_game/components/has_damage.dart';
+import 'package:plane_war_game/util/abstract_util.dart';
 import 'package:plane_war_game/game/assets.dart';
 import 'package:plane_war_game/game/plane_war_game.dart';
 
@@ -51,6 +51,8 @@ class Bullet extends SpriteComponent with HasGameRef<PlaneWarGame>, CollisionCal
     super.onCollisionStart(intersectionPoints, other);
     print('onCollisionStart 子弹');
 
-    removeFromParent();
+    if (other is IsEnemy) {
+      removeFromParent();
+    }
   }
 }
